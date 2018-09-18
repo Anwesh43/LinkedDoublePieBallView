@@ -108,6 +108,10 @@ class DoublePieBallView(ctx : Context) : View(ctx) {
         private var next : DPBNode? = null
         private var prev : DPBNode? = null
 
+        init {
+            addNeighbor()
+        }
+
         fun addNeighbor() {
             if (i < nodes - 1) {
                 next = DPBNode(i + 1)
@@ -144,11 +148,12 @@ class DoublePieBallView(ctx : Context) : View(ctx) {
     }
 
     data class DoublePieBall(var i : Int) {
-        private var curr : DPBNode = DPBNode(0)
+        private var root : DPBNode = DPBNode(0)
+        private var curr : DPBNode = root
         private var dir : Int = 1
 
         fun draw(canvas : Canvas, paint : Paint) {
-            curr.draw(canvas, paint)
+            root.draw(canvas, paint)
         }
 
         fun update(cb : (Int, Float) -> Unit) {
