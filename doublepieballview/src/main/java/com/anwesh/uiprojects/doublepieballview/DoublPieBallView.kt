@@ -8,11 +8,34 @@ import android.view.View
 import android.view.MotionEvent
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 
 val nodes : Int = 5
 
+fun Canvas.drawDPBNode(i : Int, scale : Float, paint : Paint) {
+    paint.color = Color.parseColor("#e53935")
+    val w : Float = width.toFloat()
+    val h : Float = height.toFloat()
+    val gap : Float = h / (nodes + 1)
+    val r : Float = gap/8
+    save()
+    translate(w/2, gap + i * gap)
+    for (j in 0..1) {
+        val sf : Float = 1f - 2 * j
+        val sc : Float = Math.min(0.5f, Math.max(scale - 0.5f * j, 0f)) * 2
+        save()
+        translate((w/2 -r) * sf * sc, r * sf)
+        paint.strokeWidth = Math.min(w, h) / 60
+        paint.style = Paint.Style.STROKE
+        drawCircle(0f, 0f, r, paint)
+        paint.style = Paint.Style.FILL
+        drawArc(RectF(-r, -r, r, r), 0f, 360f * sc, true, paint)
+        restore()
+    }
+    restore()
+}
 class DoublePieBallView(ctx : Context) : View(ctx) {
 
     private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
