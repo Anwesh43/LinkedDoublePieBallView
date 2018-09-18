@@ -161,4 +161,25 @@ class DoublePieBallView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : DoublePieBallView) {
+        private val dpb : DoublePieBall = DoublePieBall(0)
+        private val animator : Animator = Animator(view)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#BDBDBD"))
+            dpb.draw(canvas, paint)
+            animator.animate {
+                dpb.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            dpb.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
