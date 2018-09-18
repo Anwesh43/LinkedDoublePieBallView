@@ -4,6 +4,7 @@ package com.anwesh.uiprojects.doublepieballview
  * Created by anweshmishra on 18/09/18.
  */
 
+import android.app.Activity
 import android.view.View
 import android.view.MotionEvent
 import android.content.Context
@@ -182,6 +183,14 @@ class DoublePieBallView(ctx : Context) : View(ctx) {
             dpb.startUpdating {
                 animator.start()
             }
+        }
+    }
+
+    companion object {
+        fun create(activity : Activity) : DoublePieBallView {
+            val view : DoublePieBallView = DoublePieBallView(activity)
+            activity.setContentView(view)
+            return view
         }
     }
 }
